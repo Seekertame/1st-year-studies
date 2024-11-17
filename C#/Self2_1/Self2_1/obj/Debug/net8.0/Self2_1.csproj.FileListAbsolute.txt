@@ -1,0 +1,14 @@
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\bin\Debug\net8.0\Self2_1.exe
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\bin\Debug\net8.0\Self2_1.deps.json
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\bin\Debug\net8.0\Self2_1.runtimeconfig.json
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\bin\Debug\net8.0\Self2_1.dll
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\bin\Debug\net8.0\Self2_1.pdb
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\obj\Debug\net8.0\Self2_1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\obj\Debug\net8.0\Self2_1.AssemblyInfoInputs.cache
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\obj\Debug\net8.0\Self2_1.AssemblyInfo.cs
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\obj\Debug\net8.0\Self2_1.csproj.CoreCompileInputs.cache
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\obj\Debug\net8.0\Self2_1.dll
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\obj\Debug\net8.0\refint\Self2_1.dll
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\obj\Debug\net8.0\Self2_1.pdb
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\obj\Debug\net8.0\Self2_1.genruntimeconfig.cache
+C:\Users\timur\RiderProjects\Self2_1\Self2_1\obj\Debug\net8.0\ref\Self2_1.dll
