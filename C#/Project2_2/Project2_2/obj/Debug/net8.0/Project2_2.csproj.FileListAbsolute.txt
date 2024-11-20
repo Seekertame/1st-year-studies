@@ -1,0 +1,14 @@
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\bin\Debug\net8.0\Project2_2.exe
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\bin\Debug\net8.0\Project2_2.deps.json
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\bin\Debug\net8.0\Project2_2.runtimeconfig.json
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\bin\Debug\net8.0\Project2_2.dll
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\bin\Debug\net8.0\Project2_2.pdb
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\obj\Debug\net8.0\Project2_2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\obj\Debug\net8.0\Project2_2.AssemblyInfoInputs.cache
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\obj\Debug\net8.0\Project2_2.AssemblyInfo.cs
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\obj\Debug\net8.0\Project2_2.csproj.CoreCompileInputs.cache
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\obj\Debug\net8.0\Project2_2.dll
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\obj\Debug\net8.0\refint\Project2_2.dll
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\obj\Debug\net8.0\Project2_2.pdb
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\obj\Debug\net8.0\Project2_2.genruntimeconfig.cache
+C:\Users\timur\RiderProjects\Project2_2\Project2_2\obj\Debug\net8.0\ref\Project2_2.dll

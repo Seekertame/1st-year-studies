@@ -1,0 +1,22 @@
+C:\Users\timur\Downloads\Тестовая папка 1\Тестовый файл 1.csv
+C:\Users\timur\Downloads\Тестовая папка 1\Тестовый_файл_2.csv
+C:\Users\timur\Downloads\Тестовая папка 1\Test file 3.csv
+C:\Users\timur\Downloads\Тестовая папка 1\Test_file_4.csv
+
+C:\Users\timur\Downloads\Тестовая папка 1\Тестовый файл 5.txt
+Заполненный строкой текстовый файл.
+
+C:\Users\timur\Downloads\Тестовая папка 1\Тестовый_файл_6.txt
+
+C:\Users\timur\OneDrive\Рабочий стол\Studies\C#\Проект 2 модуль\Тестовая_папка_2\Тестовый файл 1.csv
+CSV файл с правильной структурой.
+
+C:\Users\timur\OneDrive\Рабочий стол\Studies\C#\Проект 2 модуль\Тестовая_папка_2\Тестовый_файл_2.csv
+CSV файл c неправильной структурой. 
+
+C:\Users\timur\OneDrive\Рабочий стол\Studies\C#\Проект 2 модуль\Тестовая_папка_2\Test file 3.csv
+C:\Users\timur\OneDrive\Рабочий стол\Studies\C#\Проект 2 модуль\Тестовая_папка_2\Test_file_4.csv
+C:\Users\timur\OneDrive\Рабочий стол\Studies\C#\Проект 2 модуль\Тестовая_папка_2\Тестовый файл 5.txt
+C:\Users\timur\OneDrive\Рабочий стол\Studies\C#\Проект 2 модуль\Тестовая_папка_2\Тестовый_файл_6.txt
+
+C:\Users\timur\OneDrive\Рабочий стол\Studies\C#\Проект 2 модуль\Port_Data.csv
