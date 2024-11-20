@@ -29,6 +29,7 @@ namespace Project2_2
                 // Проверка типа файла
                 if (!Path.GetExtension(_filePath).Equals(".csv", StringComparison.OrdinalIgnoreCase))
                 {
+                    // _csvData = null;
                     throw new Exception("Тип файла некорректен. Введите путь к CSV файлу.");
                 }
                 
@@ -39,16 +40,19 @@ namespace Project2_2
                 for (int i = 0; i < lines.Length; i++)
                 {
                     _csvData[i] = i == 0 
-                        ? lines[i].Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries) 
-                        : lines[i].Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)[1..];
+                        ? lines[i].Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries) 
+                        : lines[i].Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)[1..];
 
                 }
 
                 if (!(_csvData != null && _csvData.Length != 0 && ValidateCsvStructure()))
                 {
+                    // _csvData = null;
                     throw new Exception("CSV файл не соотвествует структуре.");
-                    _csvData = null;
                 }
+                
+                UploadFileFromUser();
+                
                 Console.WriteLine("Файл успешно открыт, проверен и загружен.");
             }
             
@@ -123,6 +127,39 @@ namespace Project2_2
             }
 
             return true;
+        }
+
+        private void UploadFileFromUser(bool fileFromUserExist)
+        {
+            // Определяем директорию назначения "fileFromUser" в папке проекта
+            string destinationDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fileFromUser");
+
+            // Создаем директорию, если её нет
+            Directory.CreateDirectory(destinationDirectory);
+
+            // Формируем полный путь к файлу в директории "fileFromUser"
+            string destinationFilePath = Path.Combine(destinationDirectory, Path.GetFileName(_filePath));
+
+            if (!fileFromUserExist)
+            {
+                // Копируем файл в директорию
+                File.Copy(_filePath, destinationFilePath, overwrite: true);
+                Console.WriteLine($"Файл успешно загружен в: {destinationFilePath}");
+            }
+            else
+            {
+                // Получаем список файлов в директории
+                string[] files = Directory.GetFiles(destinationDirectory);
+                
+                // Удаляем предыдущий файл
+                File.Delete(files[0]);
+                
+                // Копируем новый файл в директорию
+                File.Copy(_filePath, destinationFilePath, overwrite: true);
+                
+                Console.WriteLine($"Файл успешно обновлен. Новый файл: {destinationFilePath}");
+            }
+            
         }
         
         // Публичный метод для получения данных CSV
