@@ -1,0 +1,219 @@
+﻿{
+    "verbs": [
+
+      {
+        "id": "library.fireplace.entrance",
+      "category": "Workstation",
+      "label": "Камин в фойе",
+        "desc": "Посетители радовались теплу после пронизывающего ветра на переправе.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.hermit",
+      "category": "Workstation",
+      "label": "Печурка отшельника",
+        "desc": "Ворчит, будто сварливый старый дед.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.infirmary",
+      "category": "Workstation",
+      "label": "Камин в лазарете",
+        "desc": "Приятное тепло.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.librarian",
+      "category": "Workstation",
+      "label": "Камин в комнате библиотекаря",
+        "desc": "Даже когда ветер заставляет грохотать ставни, очаг наполняет комнату теплом и уютом.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.lodge",
+      "category": "Workstation",
+      "label": "Камин в сторожке",
+        "desc": "Огонь всегда принимает подношения. И кипятит воду для чая.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.long1",
+      "category": "Workstation",
+      "label": "Камин в кабинете Зимней башни",
+        "desc": "Огню не под силу согреть эту комнату, но он хотя бы гонит прочь сквозняки.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.mirrors",
+      "category": "Workstation",
+      "label": "Камин в Зале расставаний",
+        "desc": "Отражение пламени в зеркалах трудно описать без риска перейти на пятистопный стих.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.pale",
+      "category": "Workstation",
+      "label": "Камин в Бледной комнате",
+        "desc": "Огонь всегда принимает подношения. И кипятит воду для чая.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.refectory",
+      "category": "Workstation",
+      "label": "Камин в обеденной зале",
+        "desc": "Огонь за решёткой сонно бормочет.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.servants",
+      "category": "Workstation",
+      "label": "Камин в комнате прислуги",
+        "desc": "Угли испускают жар.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.staffroom",
+      "category": "Workstation",
+      "label": "Печурка в караульной",
+        "desc": "Тихая маленькая печка.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "library.fireplace.westcott",
+      "category": "Workstation",
+      "label": "Камин в комнате Уэсткотта",
+        "desc": "Это единственное место в Доме, где огню дозволялось соседствовать с книгами.",
+        "audio":"Fire",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}]
+      },
+      {
+        "id": "world.sea.boathouse",
+      "category": "Workstation",
+      "label": "Лодочный сарай",
+        "desc": "Лодка давно исчезла, море осталось. Так бывает всегда. [Здесь можно выбросить ненужный предмет, отпустить существо на волю или искупаться.]",
+        "audio":"Splash",
+        "slots": [        {"id": "thing","label": "Предмет", "required":{"thing":1,"beast":1,"ability":1},"forbidden":{"fatigued":1,"malady":1}}]
+      },
+      {
+        "id": "world.sea.crane",
+      "category": "Workstation",
+      "label": "Погрузочный кран",
+      "audio":"CreakingWheels",
+      "comments":"The only sea workstation which doesn't accept Abilities - prisoners couldn't swim to freedom.",
+        "desc": "Когда-то давно кран поднимал провизию и опускал заключённых, рискнувших сбежать – но безуспешно. [Здесь можно выбросить ненужный предмет или отпустить существо на волю.]",
+        "slots": [         {"id": "thing","label": "Вещь", "required":{"thing":1,"beast":1}}]
+      },
+      {
+        "id": "library.well",
+      "category": "Workstation",
+      "label": "Колодец Дома безмолвия",
+      "audio":"Splash",
+        "desc": "Здесь я могу набрать воды – или уронить что-нибудь и потерять навсегда.",
+        "slots": [  {"id": "a","label": "Усилие", "essential":{"ability": 1,"heart":1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"penny":1}}]
+      },
+      {
+        "id": "world.sea.beach",
+      "category": "Workstation",
+      "label": "Край моря",
+      "audio":"sand",
+        "desc": "Море всегда голодно; море никогда не спит; море принимает подношения. [Здесь можно выбросить ненужный предмет, отпустить существо на волю или искупаться.]",
+        "slots": [
+        {"id": "object","label": "Предмет", "required":{"thing":1,"beast":1,"penny":1,"ability":1},"forbidden":{"fatigued":1,"malady":1}}]
+      },
+{	       "id": "world.tree.gate",
+	"label": "Тис Бриана",	
+  "desc": "Он ждал вас со дней Вильгельма Завоевателя. Остряки предложили бы с<i>тис</i>нуть его в объятиях.",
+	"audio":"GardenMeadow",	
+"slots": [
+{	"id": "a","label": "Душа", "essential":{"ability": 1}},
+{	"id": "j","label": "Дневник" ,
+"required":{  "journal":1}
+	}],	
+ 	"category": "Workstation"	},
+
+      {	       "id": "station.serving.lodge",
+      	"label": "Разлить по бокалам",	"desc": "Чашки, тарелки и стаканы – так что, если я захочу предложить гостю вина, мне не придётся отдавать ему всю бутылку.",
+        "audio":"Glassware",
+        	"slots": [{	"id": "p","label": "Разлить", "essential":{"distributable": 1}}],
+            	"category": "Workstation"	},
+
+              {	       "id": "station.serving.kitchen",
+              "label": "Разлить по бокалам",	"desc": "Чашки, тарелки и стаканы – так что, если я захочу предложить гостю вина, мне не придётся отдавать ему всю бутылку.",
+              "audio":"Glassware",
+                "slots": [{	"id": "p","label": "Разлить", "essential":{"distributable": 1}}],
+                    "category": "Workstation"	},
+
+                    {	       "id": "station.serving.gaol",
+                    "label": "Разлить по бокалам",	"desc": "Чашки, тарелки и стаканы – так что, если я захочу предложить гостю вина, мне не придётся отдавать ему всю бутылку.",
+                    "audio":"Glassware",
+                      "slots": [{	"id": "p","label": "Разлить", "essential":{"distributable": 1}}],
+                          "category": "Workstation"	},
+
+              {	       "id": "pumps.upper",
+              "label": "Насосы: верхний уровень",
+              	"desc": "Курия установила эти насосы, чтобы осушить нижние уровни – но это было уже в конце XIX века. Нужно найти подходящий материал и горючее, а для ремонта обеспечить влияние Кузни 5-й ступени.",
+                "audio":"pumps",
+                "hints": ["forge","knock"],
+                "slots": [{	"id": "s","label": "Навык", "essential":{"skill": 1},"required":{"forge":1,"knock":1}},
+                {	"id": "a","label": "Душа", "essential":{"ability": 1},"forbidden":{"fatigued":1}},
+                {	"id": "l","label": "Горючее", "essential":{"liquid": 1,"fuel":1}},
+                {	"id": "m1","label": "Металл", "essential":{"metal": 1}},
+                {	"id": "m2","label": "Металл", "essential":{"metal": 1}}
+              ],
+              "aspects":{"difficulty.prentice":5},      
+                "category": "Workstation"
+        	},
+
+          {	       "id": "pumps.lower",
+          "label": "Насосы: нижний уровень",
+          "desc": "В отличие от машин наверху, эти были изготовлены позднее. Здесь даже есть что-то вроде генератора. Однако они в ещё худшем состоянии. Нужно найти подходящий материал и горючее, а для ремонта обеспечить влияние Кузни 10-й ступени.",
+          "audio":"pumps",
+          "hints": ["forge","knock"],
+            "slots": [{	"id": "s","label": "Навык", "essential":{"skill": 1},"required":{"forge":1,"knock":1}},
+            {	"id": "a","label": "Душа", "essential":{"ability": 1},"forbidden":{"fatigued":1}},
+            {	"id": "l","label": "Горючее", "essential":{"liquid": 1,"fuel":1}},
+            {	"id": "m1","label": "Металл", "essential":{"metal": 1}},
+            {	"id": "m2","label": "Металл", "essential":{"metal": 1}}
+          ],
+          "aspects":{"difficulty.scholar":10},
+            "category": "Workstation"
+      },
+
+      {	       "id": "library.kitchen.gaol",	"label": "Кухонная плита",	"Desc": "Подаваемая заключённым еда была на удивление вкусной и сытной – в соответствии с гуманистическими теориями Коллерса о перевоспитании.",	"hints": ["scale","lantern","nectar","grail"],	"audio":"Fire",	"slots": [{	"id": "a","label": "Душа", "essential":{"ability": 1} ,"required":{"scale":1,"lantern":1,"nectar":1,"grail":1}	},{	"id": "s","label": "Навык", "essential":{"skill": 1} ,"required":{"scale":1,"lantern":1,"nectar":1,"grail":1}	},{	"id": "m","label": "Воспоминание", "essential":{"memory": 1} ,"required":{"scale":1,"lantern":1,"nectar":1,"grail":1}	},
+      {	"id": "i1","label": "Ингредиент" ,"required":{"sustenance":1,"beverage":1,"root":1,"flower":1,"leaf":1,"fuel":1,"ingredient":1},"forbidden":{"fatigued":1}	},
+      {	"id": "i2","label": "Ингредиент" ,"required":{"sustenance":1,"beverage":1,"root":1,"flower":1,"leaf":1,"fuel":1,"ingredient":1},"forbidden":{"fatigued":1}	},
+      {	"id": "t1","label": "Кухонная утварь" ,"required":{"kitchenware":1,"knife":1}	}],	 "aspects":{"difficulty.prentice":5,"difficulty.scholar":10,"difficulty.keeper":15	},		"ambits":true,	"category": "Workstation"	},
+      {	       "id": "library.kitchen.hallofvoices",	"label": "Священный очаг",	"Desc": "Здесь жрицы готовили блюда, которые не могли или не хотели доверить слугам.",	"hints": ["moon","edge","nectar","grail"],	"audio":"Fire",	"slots": [{	"id": "a","label": "Душа", "essential":{"ability": 1} ,"required":{"moon":1,"edge":1,"nectar":1,"grail":1}	},{	"id": "s","label": "Навык", "essential":{"skill": 1} ,"required":{"moon":1,"edge":1,"nectar":1,"grail":1}	},{	"id": "m","label": "Воспоминание", "essential":{"memory": 1} ,"required":{"moon":1,"edge":1,"nectar":1,"grail":1}	},{	"id": "i1","label": "Ингредиент" ,"required":{"sustenance":1,"beverage":1,"root":1,"flower":1,"leaf":1,"fuel":1,"ingredient":1},"forbidden":{"fatigued":1}	},
+      {	"id": "i2","label": "Ингредиент" ,"required":{"sustenance":1,"beverage":1,"root":1,"flower":1,"leaf":1,"fuel":1,"ingredient":1},"forbidden":{"fatigued":1}	},
+      {	"id": "t1","label": "Кухонная утварь" ,"required":{"kitchenware":1,"knife":1}	}],	 "aspects":{"difficulty.prentice":5,"difficulty.scholar":10,"difficulty.keeper":15	},		"ambits":true,	"category": "Workstation"	},
+      {	       "id": "library.kitchen.servants",	"label": "Кухонный очаг",	"Desc": "В деревне бытует примета, что, отнеся библиотекарю немного еды, можно привлечь удачу. Для жителей это уже стало традицией. Но иногда библиотекарю хочется горячей еды, а в наши дни библиотекарь – это единственный человек в доме, который умеет готовить.",	"hints": ["scale","heart","nectar","grail"],	"audio":"Fire",	"slots": [{	"id": "a","label": "Душа", "essential":{"ability": 1} ,"required":{"scale":1,"heart":1,"nectar":1,"grail":1}	},{	"id": "s","label": "Навык", "essential":{"skill": 1} ,"required":{"scale":1,"heart":1,"nectar":1,"grail":1}	},{	"id": "m","label": "Воспоминание", "essential":{"memory": 1} ,"required":{"scale":1,"heart":1,"nectar":1,"grail":1}	},{	"id": "i1","label": "Ингредиент" ,"required":{"sustenance":1,"beverage":1,"root":1,"flower":1,"leaf":1,"fuel":1,"ingredient":1},"forbidden":{"fatigued":1}	},{	"id": "i2","label": "Ингредиент" ,"required":{"sustenance":1,"beverage":1,"root":1,"flower":1,"leaf":1,"fuel":1,"ingredient":1},"forbidden":{"fatigued":1}	},
+      {	"id": "t1","label": "Кухонная утварь" ,"required":{"kitchenware":1,"knife":1}	}],	 "aspects":{"difficulty.prentice":5,"difficulty.scholar":10,"difficulty.keeper":15	},		"ambits":true,	"category": "Workstation"	}
+    
+
+     
+    ]
+}

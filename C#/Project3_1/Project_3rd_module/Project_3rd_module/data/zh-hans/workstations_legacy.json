@@ -1,0 +1,31 @@
+{
+	"verbs":[
+		{
+			"slots":[
+				{
+					"id":"a",
+					"label":"魂质"
+				},
+				{
+					"id":"s",
+					"label":"技艺"
+				},
+				{
+					"id":"m",
+					"label":"回忆"
+				},
+				{
+					"id":"i1",
+					"label":"+"
+				},
+				{
+					"id":"i2",
+					"label":"+"
+				}
+			],
+			"id":"world.corals.deeplight",
+			"label":"幽光珊瑚礁",
+			"desc":"浪潮鲜少触及的荒野。"
+		}
+	]
+}

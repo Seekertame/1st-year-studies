@@ -1,0 +1,193 @@
+{
+  // В каждом файле мы можем найти verbs - это список всех данных. Каждый файл должен иметь структуру {verbs : []} - что-то находится в квадратных скобках. 
+  
+  // Важное замечаение: оказывается везде всё есть, только оно не в порядке, что логично, ведь у JSON связь - значение : ключ. 
+  
+  // workstations_beds.json: Заметим, что тут есть xtriggers и category.
+  "verbs": [
+    {	       
+      "id": "library.bed.guest.cell.adept",	
+      "label": "Гостевая кровать: камера адептов",
+      "desc": "Кровать с нанесёнными печатями, что не дают посещать Обитель во сне. [Используйте карту души с указанным аспектом, чтобы перебраться в эту постель самим, или разместите в ней посетителя со сходным интересом, чтобы побудить его задержаться на Бранкраге.]",
+      "audio":"Bed", 
+      "hints": ["scale","lantern","winter","heart"], 
+      "slots": [
+        {	
+          "id": "a",
+          "label": "Обитатель",
+          "description": "Разместите здесь карту души с указанным аспектом, чтобы устроиться в постели самому, или посетителя, чтобы дать ему пристанище на ночь.", 
+          "essential":{"campable": 1},
+          "required":{"scale":1,
+            "interest.scale":1},
+          "forbidden":
+          {"fatigued":1,
+            "malady":1,
+            "numatic":1}
+        }
+      ],	
+      "xtriggers": {"camping":"library.bed.rest.cell.adept"},	
+      "category": "Workstation"
+    },
+    
+    
+    // workstations_gathering.json: Заметим, что тут есть hints.
+    {
+      "id": "garden.plot.a.1",
+      "category": "Workstation",
+      "label": "Сад",
+      "desc": "Чашечник душистый летом и осенью, пасхальная роза зимой, а в нуму – и более редкие растения.",
+      "audio":"GardenMeadow",
+      "slots": [        
+        {
+          "id": "a",
+          "label": "Усилие", 
+          "essential":{"ability": 1},
+          "required":{"heart":1},
+          "forbidden":{
+            "fatigued":1,
+            "malady":1}
+        },
+        {
+          "id": "skill",
+          "label": "Знание", 
+          "essential":{"skill":1},
+          "required":{"nectar":1}}
+      ],
+      "hints":["nectar"]
+    },
+    
+    
+    // workstation_legacy.json: Заметим, что тут шло всё не в определенном порядке, что логично ведь у JSON связь - значение:ключ. 
+    {	       
+      "id": "world.corals.deeplight",	
+      "label": "Глубинные кораллы",	
+      "desc": "Здесь познают прилив внемлющие волнам.",	
+      "hints": ["nectar","rose","scale","moon"],	
+      "audio":"WaterDroplet",	
+      "slots": [
+        {	
+          "id": "a",
+          "label": "Душа", 
+          "essential":{"ability": 1} ,
+          "required":{"nectar":1,"rose":1,"scale":1,"moon":1}
+        },
+        {	
+          "id": "s",
+          "label": "Навык", 
+          "essential":{"skill": 1} ,
+          "required":{"nectar":1,"rose":1,"scale":1,"moon":1}
+        },
+        {	
+          "id": "m",
+          "label": "Воспоминание", 
+          "essential":{"memory": 1} ,
+          "required":{"nectar":1,"rose":1,"scale":1,"moon":1}
+        },
+        {	
+          "id": "i1",
+          "label": "+" ,
+          "required":{"ability":1},
+          "forbidden":{"fatigued":1}
+        },
+        {	
+          "id": "i2",
+          "label": "+" ,
+          "required":{"memory":1},"forbidden":{"fatigued":1}
+        }
+      ],	 
+      "aspects": {
+        "difficulty.prentice":5,
+        "difficulty.scholar":10,
+        "difficulty.keeper":15 ,
+        "e.bosk":1
+      }, 
+      "xtriggers":{"delegacizing":"library.corals.deeplight"},
+
+      "category": "Workstation"
+    },
+    
+    // workstations_library_world.json: ambits какие-то появились. 
+    {	       
+      "id": "library.altar.ascite",
+      "label": "Лабрический алтарь",	
+      "Desc": "Рогатая Секира, что отверзает путь и охраняет порог, считается последним богом-из-камня.",	
+      "hints": ["edge","scale","winter","knock"],	
+      "audio":"Stone",	
+      "slots": [
+        {
+          "id": "a",
+          "label": "Душа", 
+          "essential":{"ability": 1} ,
+          "required":{"edge":1,"scale":1,"winter":1,"knock":1}
+        },
+        {	
+          "id": "s",
+          "label": "Навык", 
+          "essential":{"skill": 1} ,
+          "required":{"edge":1,"scale":1,"winter":1,"knock":1}
+        },
+        {	
+          "id": "m",
+          "label": "Воспоминание", 
+          "essential":{"memory": 1} ,
+          "required":{"edge":1,"scale":1,"winter":1,"knock":1}
+        },
+        {	"id": "i1","label": "Подношение" ,"required":{"tool":1,"cooperative":1,"ability":1,"mark":1,"omen":1},"forbidden":{"fatigued":1}	},
+        {	"id": "i2","label": "Память" ,"required":{"tool":1,"memory":1},"forbidden":{"fatigued":1}	}
+      ],	 
+      "aspects": {"difficulty.prentice":5,"difficulty.scholar":10,"difficulty.keeper":15 ,"e.nyctodromy":1 	},		
+      "ambits":true,	
+      "category": "Workstation"
+    },
+    
+    // Ничего нового. 
+    {
+      "id": "library.fireplace.entrance",
+      "category": "Workstation",
+      "label": "Камин в фойе",
+      "desc": "Посетители радовались теплу после пронизывающего ветра на переправе.",
+      "audio":"Fire",
+      "slots": [  
+        {"id": "a","label": "Усилие", "essential":{"ability": 1},"forbidden":{"fatigued":1,"malady":1}},
+        {"id": "thing","label": "Вещь", "required":{"thing":1,"correspondence":1}}
+      ]
+    },
+    // Nothing new
+    {	       
+      "id": "library.chrysalis.wisp",	
+      "label": "Кокон",	
+      "desc": "В гостеприимной Истории из него может что-нибудь вылупиться. Но до тех пор можно прижать ухо к дрожащему, пахнущему небом теплу и слушать его сны. С тех пор, как в него вошёл «бедный дымок», поверхность кокона сделалась чуть более гладкой и прохладной. [Кокон теперь принимает подношения в духе Зимы. Кроме того, сам он отныне наделён толикой этого принципа.]",
+      "hints": ["nectar","heart","scale","moth","winter"],	
+      "audio":"Heartbeat",	
+      "slots": [
+        {"id": "a","label": "Душа", "essential":{"ability": 1} ,"required":{"nectar":1,"heart":1,"scale":1,"moth":1,"winter":1}	},
+        {	"id": "s","label": "Навык", "essential":{"skill": 1} ,"required":{"nectar":1,"heart":1,"scale":1,"moth":1,"winter":1}	},
+        {	"id": "m","label": "Воспоминание", "essential":{"memory": 1} ,"required":{"nectar":1,"heart":1,"scale":1,"moth":1,"winter":1}	},
+        {	"id": "i1","label": "Спина" ,"required":{"liquid":1,"ability":1}, "forbidden":{"fatigued":1}	},
+        {	"id": "i2","label": "Брюхо" ,"required":{"liquid":1,"memory":1},"forbidden":{"fatigued":1}	}
+      ],	 
+      "aspects":{"difficulty.prentice":5,"difficulty.scholar":10,"difficulty.keeper":15 ,"e.bosk":1,"winter":1,"workstationhasaspect":1},		
+      "ambits":true,	
+      "category": "Workstation"
+    },
+    // Nothing new
+    {
+      "id": "village.rectory.closed",
+      "label": "Дом священника [Недоступен]",
+      "desc": "Отец Тимоти – гостеприимная душа, но его экономка Терренс ревностно бережёт покой своего нанимателя. Она не хочет, чтобы его невинные богословские теории привели к разладу с людьми Нового короля.\n [Вы должны водить со Священником личное знакомство – или попросить представить вас кого-то, кто отмечен Небом, Стуком либо Лампадой. Им может оказаться кто-то, кто разделяет интерес о. Тимоти к богословию или поэзии.]",
+      "category": "Workstation",
+      "audio":"Locked",
+      "slot": {
+        "id": "w",
+        "label": "Парадный вход",
+        "description":"Мне нужен кто-то, кто представит меня отцу Тимоти, – быть может кто-то, кто разделяет его интерес к богословию или поэзии.",
+        "essential": {"introduction":1},
+        "required": {"lantern":1,"knock":1,"sky":1},
+        "forbidden":{"introduction.blacksmith.start":1,"introduction.coffinmaker.start":1,"introduction.midwife.start":1}
+      },
+      "xtriggers":{"unlocking":"village.rectory.open","befriending":"village.rectory.open.friend"},
+      "hints":["lantern","knock","sky"]
+    }
+  ]
+
+  }

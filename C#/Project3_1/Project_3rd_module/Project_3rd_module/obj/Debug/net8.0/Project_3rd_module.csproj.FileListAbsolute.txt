@@ -1,0 +1,14 @@
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_3rd_module.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_3rd_module.AssemblyInfoInputs.cache
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_3rd_module.AssemblyInfo.cs
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_3rd_module.csproj.CoreCompileInputs.cache
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\bin\Debug\net8.0\Project_3rd_module.exe
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\bin\Debug\net8.0\Project_3rd_module.deps.json
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\bin\Debug\net8.0\Project_3rd_module.runtimeconfig.json
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\bin\Debug\net8.0\Project_3rd_module.dll
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\bin\Debug\net8.0\Project_3rd_module.pdb
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_3rd_module.dll
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\refint\Project_3rd_module.dll
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_3rd_module.pdb
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_3rd_module.genruntimeconfig.cache
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\ref\Project_3rd_module.dll
