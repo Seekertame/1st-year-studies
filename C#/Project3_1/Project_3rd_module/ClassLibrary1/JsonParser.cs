@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
 
 namespace ClassLibrary1
@@ -13,33 +14,38 @@ namespace ClassLibrary1
     public static class JsonParser
     {
         // Внутренние поля для разбора JSON-текста.
-        private static string _json;
+        private static string? _json;
         private static int _index;
 
         /// <summary>
-        /// Считывает данные из стандартного потока ввода (Console.In), разбирает их
-        /// и возвращает объект, реализующий IJSONObject.
+        /// Считывает данные из файла по указанному пути, разбирает их и возвращает объект, реализующий IJSONObject.
         /// Если корневой элемент не является объектом или после разбора остались лишние символы,
         /// генерируется исключение.
         /// </summary>
+        /// <param name="filePath">Путь к JSON-файлу (не должен быть null или пустым)</param>
         public static IJSONObject ReadJson(string filePath)
         {
-            if (string.IsNullOrEmpty(filePath))
+            try
             {
-                throw new Exception("Ошибка: путь к файлу не должен быть пустым или null.");
-            }
-            
-            using (StreamReader reader = new(filePath, Encoding.UTF8))
-            {
+                // Чтение файла через StreamReader; стандартный ввод перенаправляется на файл
+                using StreamReader reader = new(filePath, Encoding.UTF8);
                 Console.SetIn(reader);
                 _json = Console.In.ReadToEnd();
             }
-            
+            catch (UnauthorizedAccessException ex)
+            {
+                throw new Exception("AccessException: Нет доступа к файлу. " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ошибка при чтении файла: " + ex.Message);
+            }
+
             _index = 0;
             SkipWhitespace();
             object result = ParseValue();
             SkipWhitespace();
-            
+
             if (_index != _json.Length)
             {
                 throw new Exception("Обнаружены лишние символы после корректного JSON.");
@@ -47,10 +53,26 @@ namespace ClassLibrary1
 
             if (result is Dictionary<string, object> dict)
             {
-                // Оборачиваем разобранный словарь в универсальный JSON‑объект.
-                return new GenericJsonObject(dict);
+                // Создаем новый JSON-объект через пустой конструктор
+                // и заполняем его поля, вызывая SetField для каждого ключа
+                GenericJsonObject jsonObj = new();
+                foreach (KeyValuePair<string, object> kvp in dict)
+                {
+                    if (kvp.Value == null)
+                    {
+                        // Если значение поля равно null, заполняем его значением null
+                        // (возвращается null, так как JSON содержит значение null)
+                        jsonObj.SetField(kvp.Key, null);
+                    }
+                    else
+                    {
+                        // Для ненулевых значений устанавливаем строковое представление
+                        jsonObj.SetField(kvp.Key, kvp.Value.ToString());
+                    }
+                }
+                return jsonObj;
             }
-            
+
             throw new Exception("Корневой элемент JSON должен быть объектом.");
         }
 
@@ -65,8 +87,13 @@ namespace ClassLibrary1
 
         #region Методы разбора JSON
 
+        /// <summary>
+        /// Пропускает пробельные символы в _json.
+        /// </summary>
         private static void SkipWhitespace()
         {
+            if (_json == null) { throw new Exception("JSON string is null"); }
+            
             while (_index < _json.Length && char.IsWhiteSpace(_json[_index]))
             {
                 _index++;
@@ -79,6 +106,9 @@ namespace ClassLibrary1
         private static object ParseValue()
         {
             SkipWhitespace();
+
+            if (_json == null) { throw new Exception("JSON string is null"); }
+            
             if (_index >= _json.Length)
             {
                 throw new Exception("Неожиданный конец входных данных.");
@@ -100,20 +130,21 @@ namespace ClassLibrary1
             {
                 return ParseNumber();
             }
-            if (_json.Substring(_index).StartsWith("true"))
+            if (_json[_index..].StartsWith("true"))
             {
                 _index += 4;
                 return true;
             }
-            if (_json.Substring(_index).StartsWith("false"))
+            if (_json[_index..].StartsWith("false"))
             {
                 _index += 5;
                 return false;
             }
-            if (_json.Substring(_index).StartsWith("null"))
+            if (_json[_index..].StartsWith("null"))
             {
                 _index += 4;
-                return null;
+                // Возвращается null, так как JSON содержит литерал null
+                return null!;
             }
             throw new Exception($"Неожиданный символ '{c}' на позиции {_index}.");
         }
@@ -123,13 +154,15 @@ namespace ClassLibrary1
         /// </summary>
         private static Dictionary<string, object> ParseObject()
         {
-            Dictionary<string, object> dict = new();
+            if (_json == null) { throw new Exception("JSON string is null"); }
+            
+            Dictionary<string, object> dict = [];
             _index++; // пропускаем '{'
             SkipWhitespace();
 
             if (_index < _json.Length && _json[_index] == '}')
             {
-                _index++; // пустой объект
+                _index++; // пустой объект, возвращаем пустой словарь
                 return dict;
             }
 
@@ -171,12 +204,14 @@ namespace ClassLibrary1
         /// </summary>
         private static List<object> ParseArray()
         {
-            List<object> list = new List<object>();
+            if (_json == null) { throw new Exception("JSON string is null"); }
+            
+            List<object> list = [];
             _index++; // пропускаем '['
             SkipWhitespace();
             if (_index < _json.Length && _json[_index] == ']')
             {
-                _index++; // пустой массив
+                _index++; // пустой массив, возвращаем пустой список
                 return list;
             }
             while (true)
@@ -205,7 +240,9 @@ namespace ClassLibrary1
         /// </summary>
         private static string ParseString()
         {
-            StringBuilder sb = new StringBuilder();
+            if (_json == null) { throw new Exception("JSON string is null"); }
+
+            StringBuilder sb = new();
             _index++; // пропускаем открывающую кавычку
             while (_index < _json.Length)
             {
@@ -214,30 +251,24 @@ namespace ClassLibrary1
                 {
                     return sb.ToString();
                 }
-                if (c == '\\')
+                if (c == '\\' && _index < _json.Length)
                 {
-                    if (_index >= _json.Length)
-                    {
-                        break;
-                    }
                     char next = _json[_index++];
-                    switch (next)
+                    _ = next switch
                     {
-                        case '"': sb.Append('"'); break;
-                        case '\\': sb.Append('\\'); break;
-                        case '/': sb.Append('/'); break;
-                        case 'b': sb.Append('\b'); break;
-                        case 'f': sb.Append('\f'); break;
-                        case 'n': sb.Append('\n'); break;
-                        case 'r': sb.Append('\r'); break;
-                        case 't': sb.Append('\t'); break;
-                        default: sb.Append(next); break;
-                    }
+                        '"' => sb.Append('"'),
+                        '\\' => sb.Append('\\'),
+                        '/' => sb.Append('/'),
+                        'b' => sb.Append('\b'),
+                        'f' => sb.Append('\f'),
+                        'n' => sb.Append('\n'),
+                        'r' => sb.Append('\r'),
+                        't' => sb.Append('\t'),
+                        _ => sb.Append(next)
+                    };
+                    continue;
                 }
-                else
-                {
-                    sb.Append(c);
-                }
+                _ = sb.Append(c);
             }
             throw new Exception("Не закрыта строка.");
         }
@@ -247,6 +278,8 @@ namespace ClassLibrary1
         /// </summary>
         private static object ParseNumber()
         {
+            if (_json == null) { throw new Exception("JSON string is null"); }
+            
             int start = _index;
 
             if (_json[_index] == '-')
@@ -262,7 +295,6 @@ namespace ClassLibrary1
             if (_index < _json.Length && _json[_index] == '.')
             {
                 _index++;
-
                 while (_index < _json.Length && char.IsDigit(_json[_index]))
                 {
                     _index++;
@@ -272,47 +304,26 @@ namespace ClassLibrary1
             if (_index < _json.Length && (_json[_index] == 'e' || _json[_index] == 'E'))
             {
                 _index++;
-
                 if (_index < _json.Length && (_json[_index] == '+' || _json[_index] == '-'))
                 {
                     _index++;
                 }
-
                 while (_index < _json.Length && char.IsDigit(_json[_index]))
                 {
                     _index++;
                 }
             }
 
-            string numStr = _json.Substring(start, _index - start);
+            string numStr = _json[start.._index];
 
-            if (numStr.IndexOf('.') != -1 || numStr.IndexOf('e') != -1 || numStr.IndexOf('E') != -1)
-            {
-                if (double.TryParse(numStr, System.Globalization.NumberStyles.Any, 
-                        System.Globalization.CultureInfo.InvariantCulture, out double d))
-                {
-                    return d;
-                }
-                else
-                {
-                    throw new Exception("Неверный формат числа: " + numStr);
-                }
-            }
-            else
-            {
-                if (long.TryParse(numStr, out long l))
-                {
-                    return l;
-                }
-                else
-                {
-                    throw new Exception("Неверный формат числа: " + numStr);
-                }
-            }
+            return numStr.IndexOf('.') != -1 || numStr.IndexOf('e') != -1 || numStr.IndexOf('E') != -1
+                ? double.TryParse(numStr, System.Globalization.NumberStyles.Any,
+                    System.Globalization.CultureInfo.InvariantCulture, out double d)
+                    ? (object)d
+                    : throw new Exception("Неверный формат числа: " + numStr)
+                : long.TryParse(numStr, out long l) ? (object)l : throw new Exception("Неверный формат числа: " + numStr);
         }
-
 
         #endregion
     }
-    
 }

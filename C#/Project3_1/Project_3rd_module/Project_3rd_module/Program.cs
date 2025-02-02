@@ -8,7 +8,7 @@ namespace Project_3rd_module
 
     public class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
             Console.InputEncoding = Encoding.UTF8;
             Console.OutputEncoding = Encoding.UTF8;
@@ -36,13 +36,17 @@ namespace Project_3rd_module
                     // Только тогда программа правильно построит путь к файлу. 
                     string? filePath = app.GetFilePath();
 
+                    if (filePath == null) { continue; }
+
                     try
                     {
                         IJSONObject? jsonObject = JsonParser.ReadJson(filePath);
+                        JsonParser.WriteJson(jsonObject);
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
+                        Console.WriteLine(e.Message);
+                        continue;
                     }
                 }
             }

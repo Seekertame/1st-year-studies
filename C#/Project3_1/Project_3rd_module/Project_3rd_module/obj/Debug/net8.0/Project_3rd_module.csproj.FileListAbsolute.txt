@@ -12,3 +12,7 @@ C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net
 C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_3rd_module.pdb
 C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_3rd_module.genruntimeconfig.cache
 C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\ref\Project_3rd_module.dll
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\bin\Debug\net8.0\ClassLibrary1.dll
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\bin\Debug\net8.0\ClassLibrary1.pdb
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_3rd_module.csproj.AssemblyReference.cache
+C:\Users\timur\RiderProjects\Project_3rd_module\Project_3rd_module\obj\Debug\net8.0\Project_.06D88D7B.Up2Date

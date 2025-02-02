@@ -48,6 +48,7 @@ namespace Project_3rd_module
                 return null;
             }
             
+            /*
             // !!!!!! Потом удалить !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // Читаем файл и выводим содержимое
             using (StreamReader reader = new StreamReader(filePath, Encoding.UTF8))
@@ -56,6 +57,7 @@ namespace Project_3rd_module
                 string content = reader.ReadToEnd();
                 Console.WriteLine(content);
             }
+            */
 
             return filePath;
         }

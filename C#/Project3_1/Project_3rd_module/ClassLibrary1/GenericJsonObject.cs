@@ -19,7 +19,7 @@ namespace ClassLibrary1
         /// </summary>
         public GenericJsonObject()
         {
-            _data = new Dictionary<string, object>();
+            _data = [];
         }
 
         /// <summary>
@@ -43,17 +43,13 @@ namespace ClassLibrary1
         /// </summary>
         public string GetField(string fieldName)
         {
-            if (!_data.ContainsKey(fieldName))
-            {
-                return null;
-            }
-            return SerializeValue(_data[fieldName]);
+            return !_data.TryGetValue(fieldName, out object? value) ? string.Empty : SerializeValue(value); // Даёт пустую строку, если поле не найдено или равно null. 
         }
 
         /// <summary>
         /// Метод изменения полей не поддерживается, т.к. поля доступны только для чтения.
         /// </summary>
-        public void SetField(string fieldName, string value)
+        public void SetField(string fieldName, string? value)
         {
             throw new KeyNotFoundException("Поле недоступно для изменения.");
         }
@@ -88,56 +84,32 @@ namespace ClassLibrary1
 
             if (value is Dictionary<string, object> dict)
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("{");
-
-                bool first = true;
-                foreach (KeyValuePair<string, object> kvp in dict)
-                {
-                    if (!first)
-                    {
-                        sb.Append(",");
-                    }
-
-                    sb.Append($"\"{EscapeString(kvp.Key)}\":");
-                    sb.Append(SerializeValue(kvp.Value));
-
-                    first = false;
-                }
-
-                sb.Append("}");
-                return sb.ToString();
+                StringBuilder sb = new();
+                return sb.Append("{")
+                    .Append(string.Join(",", dict.Select(kvp =>
+                        $"\"{EscapeString(kvp.Key)}\":{SerializeValue(kvp.Value)}")))
+                    .Append("}")
+                    .ToString();
             }
 
             if (value is List<object> list)
             {
-                StringBuilder sb = new StringBuilder();
-                sb.Append("[");
-
-                bool first = true;
-                foreach (object item in list)
-                {
-                    if (!first)
-                    {
-                        sb.Append(",");
-                    }
-
-                    sb.Append(SerializeValue(item));
-                    first = false;
-                }
-
-                sb.Append("]");
-                return sb.ToString();
+                StringBuilder sb = new();
+                return sb.Append("[")
+                    .Append(string.Join(",", list.Select(SerializeValue)))
+                    .Append("]")
+                    .ToString();
             }
 
             // Для чисел и прочих типов используем инвариантное представление
-            if (value is double || value is float || value is int || value is long || value is decimal)
+            if (value is double or float or int or long or decimal)
             {
-                return Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture);
+                return Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture); 
+                // Какой тут null, когда выше рассмотрен случай, что value == null
             }
 
             // Если тип не распознан, вызываем ToString() и заключаем в кавычки.
-            return $"\"{EscapeString(value.ToString())}\"";
+            return $"\"{EscapeString(value.ToString() ?? string.Empty)}\"";
         }
 
 
@@ -146,11 +118,11 @@ namespace ClassLibrary1
         /// </summary>
         private string EscapeString(string s)
         {
-            return s.Replace("\\", "\\\\")
+            return s?.Replace("\\", "\\\\")
                     .Replace("\"", "\\\"")
                     .Replace("\n", "\\n")
                     .Replace("\r", "\\r")
-                    .Replace("\t", "\\t");
+                    .Replace("\t", "\\t") ?? string.Empty;
         }
     }
 }
