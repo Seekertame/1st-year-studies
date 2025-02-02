@@ -45,9 +45,9 @@ namespace Project_3rd_module
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e.Message);
-                        continue;
+                        Console.WriteLine(e);
                     }
+
                 }
             }
 

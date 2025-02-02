@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 
@@ -25,6 +24,7 @@ namespace ClassLibrary1
         /// <param name="filePath">Путь к JSON-файлу (не должен быть null или пустым)</param>
         public static IJSONObject ReadJson(string filePath)
         {
+            TextReader originalIn = Console.In;
             try
             {
                 // Чтение файла через StreamReader; стандартный ввод перенаправляется на файл
@@ -40,12 +40,23 @@ namespace ClassLibrary1
             {
                 throw new Exception("Ошибка при чтении файла: " + ex.Message);
             }
+            finally
+            {
+                // Восстанавливаем оригинальный поток ввода.
+                Console.SetIn(originalIn);
+            }
 
             _index = 0;
             SkipWhitespace();
             object result = ParseValue();
             SkipWhitespace();
 
+            if (_json == null)
+            {
+                throw new Exception("JSON string is null");
+            }
+
+            // Если после разбора есть лишние символы, значит, JSON невалиден.
             if (_index != _json.Length)
             {
                 throw new Exception("Обнаружены лишние символы после корректного JSON.");
@@ -54,19 +65,19 @@ namespace ClassLibrary1
             if (result is Dictionary<string, object> dict)
             {
                 // Создаем новый JSON-объект через пустой конструктор
-                // и заполняем его поля, вызывая SetField для каждого ключа
+                // и заполняем его поля, вызывая SetField для каждого ключа.
+                // Если значение поля равно null, оставляем его как null.
                 GenericJsonObject jsonObj = new();
                 foreach (KeyValuePair<string, object> kvp in dict)
                 {
                     if (kvp.Value == null)
                     {
-                        // Если значение поля равно null, заполняем его значением null
-                        // (возвращается null, так как JSON содержит значение null)
+                        // Если значение поля равно null (JSON содержит литерал null),
+                        // заполняем поле значением null.
                         jsonObj.SetField(kvp.Key, null);
                     }
                     else
                     {
-                        // Для ненулевых значений устанавливаем строковое представление
                         jsonObj.SetField(kvp.Key, kvp.Value.ToString());
                     }
                 }
@@ -82,7 +93,16 @@ namespace ClassLibrary1
         /// </summary>
         public static void WriteJson(IJSONObject obj)
         {
-            Console.Out.WriteLine(obj.ToString());
+            // Если объект реализует GenericJsonObject, выводим pretty printed версию.
+            if (obj is GenericJsonObject gjo)
+            {
+                Console.Out.WriteLine(gjo.PrettyPrint());
+            }
+            else
+            {
+                // Иначе выводим стандартное представление через ToString().
+                Console.Out.WriteLine(obj.ToString());
+            }
         }
 
         #region Методы разбора JSON
@@ -92,8 +112,11 @@ namespace ClassLibrary1
         /// </summary>
         private static void SkipWhitespace()
         {
-            if (_json == null) { throw new Exception("JSON string is null"); }
-            
+            if (_json == null)
+            {
+                throw new Exception("JSON string is null");
+            }
+
             while (_index < _json.Length && char.IsWhiteSpace(_json[_index]))
             {
                 _index++;
@@ -107,8 +130,11 @@ namespace ClassLibrary1
         {
             SkipWhitespace();
 
-            if (_json == null) { throw new Exception("JSON string is null"); }
-            
+            if (_json == null)
+            {
+                throw new Exception("JSON string is null");
+            }
+
             if (_index >= _json.Length)
             {
                 throw new Exception("Неожиданный конец входных данных.");
@@ -154,8 +180,11 @@ namespace ClassLibrary1
         /// </summary>
         private static Dictionary<string, object> ParseObject()
         {
-            if (_json == null) { throw new Exception("JSON string is null"); }
-            
+            if (_json == null)
+            {
+                throw new Exception("JSON string is null");
+            }
+
             Dictionary<string, object> dict = [];
             _index++; // пропускаем '{'
             SkipWhitespace();
@@ -204,8 +233,11 @@ namespace ClassLibrary1
         /// </summary>
         private static List<object> ParseArray()
         {
-            if (_json == null) { throw new Exception("JSON string is null"); }
-            
+            if (_json == null)
+            {
+                throw new Exception("JSON string is null");
+            }
+
             List<object> list = [];
             _index++; // пропускаем '['
             SkipWhitespace();
@@ -240,7 +272,10 @@ namespace ClassLibrary1
         /// </summary>
         private static string ParseString()
         {
-            if (_json == null) { throw new Exception("JSON string is null"); }
+            if (_json == null)
+            {
+                throw new Exception("JSON string is null");
+            }
 
             StringBuilder sb = new();
             _index++; // пропускаем открывающую кавычку
@@ -254,6 +289,7 @@ namespace ClassLibrary1
                 if (c == '\\' && _index < _json.Length)
                 {
                     char next = _json[_index++];
+                    // Используем switch-expression для обработки escape-последовательностей
                     _ = next switch
                     {
                         '"' => sb.Append('"'),
@@ -278,8 +314,11 @@ namespace ClassLibrary1
         /// </summary>
         private static object ParseNumber()
         {
-            if (_json == null) { throw new Exception("JSON string is null"); }
-            
+            if (_json == null)
+            {
+                throw new Exception("JSON string is null");
+            }
+
             int start = _index;
 
             if (_json[_index] == '-')
@@ -310,6 +349,7 @@ namespace ClassLibrary1
                 }
                 while (_index < _json.Length && char.IsDigit(_json[_index]))
                 {
+                    Console.WriteLine("Это я во всем виноват! ParseNumber while 3");
                     _index++;
                 }
             }

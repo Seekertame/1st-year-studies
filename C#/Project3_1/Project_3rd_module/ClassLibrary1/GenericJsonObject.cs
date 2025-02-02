@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
+
 namespace ClassLibrary1
 {
     /// <summary>
@@ -12,7 +13,7 @@ namespace ClassLibrary1
     /// </summary>
     public class GenericJsonObject : IJSONObject
     {
-        private readonly Dictionary<string, object> _data;
+        private readonly Dictionary<string, object?> _data;
 
         /// <summary>
         /// Конструктор без параметров (требование задания) – создаёт пустой объект.
@@ -40,18 +41,25 @@ namespace ClassLibrary1
         /// <summary>
         /// Возвращает строковое представление значения поля.
         /// Если значение является составным, то возвращается его сериализованное представление.
+        /// Если поле не найдено или его значение равно null, возвращается пустая строка.
         /// </summary>
         public string GetField(string fieldName)
         {
-            return !_data.TryGetValue(fieldName, out object? value) ? string.Empty : SerializeValue(value); // Даёт пустую строку, если поле не найдено или равно null. 
+            // Если поле отсутствует или его значение null, возвращаем пустую строку.
+            return !_data.TryGetValue(fieldName, out object? value) || value == null ? string.Empty : SerializeValue(value);
         }
 
         /// <summary>
-        /// Метод изменения полей не поддерживается, т.к. поля доступны только для чтения.
+        /// Метод изменения полей не поддерживается после парсинга.
         /// </summary>
         public void SetField(string fieldName, string? value)
         {
-            throw new KeyNotFoundException("Поле недоступно для изменения.");
+            // Позволяем устанавливать поле только если его ещё нет.
+            if (_data.ContainsKey(fieldName))
+            {
+                throw new KeyNotFoundException("Поле уже установлено и недоступно для изменения.");
+            }
+            _data[fieldName] = value;
         }
 
         /// <summary>
@@ -69,6 +77,7 @@ namespace ClassLibrary1
         {
             if (value == null)
             {
+                // Возвращаем "null", если значение равно null.
                 return "null";
             }
 
@@ -82,36 +91,34 @@ namespace ClassLibrary1
                 return boolValue ? "true" : "false";
             }
 
-            if (value is Dictionary<string, object> dict)
+            if (value is Dictionary<string, object?> dict)
             {
                 StringBuilder sb = new();
-                return sb.Append("{")
-                    .Append(string.Join(",", dict.Select(kvp =>
-                        $"\"{EscapeString(kvp.Key)}\":{SerializeValue(kvp.Value)}")))
-                    .Append("}")
-                    .ToString();
+                _ = sb.Append("{");
+                _ = sb.Append(string.Join(",", dict.Select(kvp =>
+                    $"\"{EscapeString(kvp.Key)}\":{SerializeValue(kvp.Value!)}")));
+                _ = sb.Append("}");
+                return sb.ToString();
             }
 
             if (value is List<object> list)
             {
                 StringBuilder sb = new();
-                return sb.Append("[")
-                    .Append(string.Join(",", list.Select(SerializeValue)))
-                    .Append("]")
-                    .ToString();
+                _ = sb.Append("[");
+                _ = sb.Append(string.Join(",", list.Select(SerializeValue)));
+                _ = sb.Append("]");
+                return sb.ToString();
             }
 
             // Для чисел и прочих типов используем инвариантное представление
             if (value is double or float or int or long or decimal)
             {
-                return Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture); 
-                // Какой тут null, когда выше рассмотрен случай, что value == null
+                return Convert.ToString(value, System.Globalization.CultureInfo.InvariantCulture);
             }
 
             // Если тип не распознан, вызываем ToString() и заключаем в кавычки.
             return $"\"{EscapeString(value.ToString() ?? string.Empty)}\"";
         }
-
 
         /// <summary>
         /// Экранирует управляющие символы в строке.
@@ -119,10 +126,10 @@ namespace ClassLibrary1
         private string EscapeString(string s)
         {
             return s?.Replace("\\", "\\\\")
-                    .Replace("\"", "\\\"")
-                    .Replace("\n", "\\n")
-                    .Replace("\r", "\\r")
-                    .Replace("\t", "\\t") ?? string.Empty;
+                     .Replace("\"", "\\\"")
+                     .Replace("\n", "\\n")
+                     .Replace("\r", "\\r")
+                     .Replace("\t", "\\t") ?? string.Empty;
         }
     }
 }
