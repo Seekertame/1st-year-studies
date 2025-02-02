@@ -24,26 +24,42 @@ namespace ClassLibrary1
         /// <param name="filePath">Путь к JSON-файлу (не должен быть null или пустым)</param>
         public static IJSONObject ReadJson(string filePath)
         {
-            TextReader originalIn = Console.In;
-            try
+            if (filePath != "")
             {
-                // Чтение файла через StreamReader; стандартный ввод перенаправляется на файл
-                using StreamReader reader = new(filePath, Encoding.UTF8);
-                Console.SetIn(reader);
-                _json = Console.In.ReadToEnd();
+                try
+                {
+                    // Чтение файла через StreamReader; стандартный ввод перенаправляется на файл
+                    using StreamReader reader = new(filePath, Encoding.UTF8);
+                    Console.SetIn(reader);
+                    _json = Console.In.ReadToEnd();
+                }
+                catch (UnauthorizedAccessException ex)
+                {
+                    throw new Exception("AccessException: Нет доступа к файлу. " + ex.Message);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Ошибка при чтении файла: " + ex.Message);
+                }
+                finally
+                {
+                    // Восстанавливаем стандартный поток ввода после работы с файлом
+                    Console.SetIn(new StreamReader(Console.OpenStandardInput()));
+                }
             }
-            catch (UnauthorizedAccessException ex)
+            else
             {
-                throw new Exception("AccessException: Нет доступа к файлу. " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Ошибка при чтении файла: " + ex.Message);
-            }
-            finally
-            {
-                // Восстанавливаем оригинальный поток ввода.
-                Console.SetIn(originalIn);
+                // Режим "с клавиатуры": запрашиваем ввод JSON-данных до ввода ключевой фразы "stop input"
+                Console.WriteLine("Введите JSON-данные с клавиатуры.");
+                Console.WriteLine("Для завершения ввода введите строку: \"stop input\"");
+                StringBuilder sb = new StringBuilder();
+                string? line;
+                while ((line = Console.ReadLine()) != null && 
+                       !line.Trim().Equals("stop input", StringComparison.OrdinalIgnoreCase))
+                {
+                    sb.AppendLine(line);
+                }
+                _json = sb.ToString();
             }
 
             _index = 0;
@@ -64,34 +80,65 @@ namespace ClassLibrary1
 
             if (result is Dictionary<string, object> dict)
             {
-                // Создаем новый JSON-объект через пустой конструктор
-                // и заполняем его поля, вызывая SetField для каждого ключа.
-                // Если значение поля равно null, оставляем его как null.
-                GenericJsonObject jsonObj = new();
-                foreach (KeyValuePair<string, object> kvp in dict)
-                {
-                    if (kvp.Value == null)
-                    {
-                        // Если значение поля равно null (JSON содержит литерал null),
-                        // заполняем поле значением null.
-                        jsonObj.SetField(kvp.Key, null);
-                    }
-                    else
-                    {
-                        jsonObj.SetField(kvp.Key, kvp.Value.ToString());
-                    }
-                }
-                return jsonObj;
+                // Вместо заполнения через SetField с вызовом ToString(),
+                // создаем новый объект GenericJsonObject с сохранением полной структуры данных.
+                Console.WriteLine("JSON-файл успешно прочитан.");
+                return new GenericJsonObject(dict);
             }
 
             throw new Exception("Корневой элемент JSON должен быть объектом.");
         }
-
+        
+        /// <summary>
+        /// Сохраняет отформатированный (pretty printed) JSON, полученный из объекта IJSONObject, в файл по указанному пути.
+        /// Если файл существует, он перезаписывается, иначе создаётся новый.
+        /// После работы стандартный поток вывода восстанавливается.
+        /// </summary>
+        /// <param name="obj">Объект, реализующий IJSONObject</param>
+        /// <param name="filePath">Путь к файлу для сохранения JSON</param>
+        public static void WriteJson(IJSONObject obj, string filePath)
+        {
+            try
+            {
+                // Открываем StreamWriter для файла с кодировкой UTF8.
+                // Параметр false указывает, что файл будет перезаписан, если он существует.
+                using (StreamWriter writer = new(filePath, false, Encoding.UTF8))
+                {
+                    // Перенаправляем стандартный поток вывода на открытый файл.
+                    Console.SetOut(writer);
+                    
+                    // Если объект реализует GenericJsonObject, выводим его pretty printed представление.
+                    if (obj is GenericJsonObject gjo)
+                    {
+                        Console.Out.WriteLine(gjo.PrettyPrint());
+                    }
+                    else
+                    {
+                        // Иначе выводим стандартное представление через ToString().
+                        Console.Out.WriteLine(obj.ToString());
+                    }
+                }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                throw new Exception("AccessException: Нет доступа к файлу. " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ошибка при записи файла: " + ex.Message);
+            }
+            finally
+            {
+                // Восстанавливаем стандартный поток вывода с использованием Console.OpenStandardOutput().
+                Console.SetOut(new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true });
+            }
+        }
+        
         /// <summary>
         /// Сериализует переданный объект IJSONObject в строку в JSON‑формате и выводит её в Console.Out.
         /// Для сериализации используется реализация метода ToString() в GenericJsonObject.
         /// </summary>
-        public static void WriteJson(IJSONObject obj)
+        public static void PrintJson(IJSONObject obj) // ################################################################### Как будто будет очень удобно для вывода (не точно)
         {
             // Если объект реализует GenericJsonObject, выводим pretty printed версию.
             if (obj is GenericJsonObject gjo)
