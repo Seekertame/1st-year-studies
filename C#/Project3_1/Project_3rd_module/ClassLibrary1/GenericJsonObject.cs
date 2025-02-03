@@ -84,6 +84,155 @@ namespace ClassLibrary1
         {
             return SerializeValuePretty(_data, 0);
         }
+        
+        /// <summary>
+        /// Позволяет получить коллекцию (List<object>) из объекта по заданному ключу.
+        /// Если ключ отсутствует или значение не является коллекцией, возвращает null.
+        /// </summary>
+        /// <param name="key">Ключ, по которому хранится коллекция (например, "verbs")</param>
+        public List<object>? GetCollection(string key)
+        {
+            if (_data.TryGetValue(key, out object? collectionObj) && collectionObj is List<object> collection)
+            {
+                return collection;
+            }
+            return null;
+        }
+        
+        /// <summary>
+        /// Фильтрует коллекцию объектов внутри JSON по заданному полю и списку разрешённых значений.
+        /// Если значение поля отсутствует, объект исключается.
+        /// Если значение поля равно null, объект оставляется.
+        /// После фильтрации коллекция перезаписывается.
+        /// </summary>
+        /// <param name="collectionKey">Ключ коллекции в JSON (например, "verbs")</param>
+        /// <param name="fieldName">
+        /// Поле внутри каждого объекта коллекции, по которому производится фильтрация (например, "category").
+        /// Если у объекта нет такого поля, элемент не включается в отфильтрованный результат.
+        /// </param>
+        /// <param name="allowedValues">Список значений, которые должны остаться в фильтруемом поле</param>
+        public void FilterCollection(string collectionKey, string fieldName, List<string> allowedValues)
+        {
+            // Проверяем, существует ли коллекция по заданному ключу.
+            if (!_data.TryGetValue(collectionKey, out object? collectionObj))
+            {
+                Console.WriteLine($"Ключ '{collectionKey}' не найден в JSON-объекте.");
+                return;
+            }
+
+            if (!(collectionObj is List<object> collection))
+            {
+                Console.WriteLine($"Значение по ключу '{collectionKey}' не является коллекцией.");
+                return;
+            }
+
+            List<object> filtered = new List<object>();
+
+            foreach (object item in collection)
+            {
+                // Если элемент коллекции – это словарь (JSON-объект)
+                if (item is Dictionary<string, object> dict)
+                {
+                    // Если объект не содержит нужное поле, исключаем его из результатов фильтрации.
+                    if (!dict.TryGetValue(fieldName, out object? fieldValue))
+                    {
+                        continue; // Пропускаем этот элемент
+                    }
+                    else
+                    {
+                        // Если значение поля равно null, оставляем объект.
+                        if (fieldValue == null)
+                        {
+                            filtered.Add(item);
+                        }
+                        else
+                        {
+                            // Приводим значение к строке.
+                            string strVal = fieldValue.ToString() ?? "";
+                            // Если значение содержится в списке разрешённых, оставляем объект.
+                            if (allowedValues.Contains(strVal))
+                            {
+                                filtered.Add(item);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // Если элемент коллекции не является объектом, оставляем его без фильтрации.
+                    filtered.Add(item);
+                }
+            }
+
+            // Перезаписываем коллекцию в исходном объекте.
+            _data[collectionKey] = filtered;
+        }
+        
+        
+        /// <summary>
+        /// Сортирует коллекцию объектов внутри JSON по значению указанного поля.
+        /// Null-значения и отсутствующие поля не исключаются, их сортировка проводится согласно стандартным правилам.
+        /// После сортировки коллекция перезаписывается.
+        /// </summary>
+        /// <param name="collectionKey">Ключ коллекции в JSON (например, "verbs")</param>
+        /// <param name="sortField">Поле внутри каждого объекта коллекции, по которому производится сортировка</param>
+        /// <param name="ascending">Направление сортировки: true - по возрастанию, false - по убыванию</param>
+        public void SortCollection(string collectionKey, string sortField, bool ascending)
+        {
+            // Проверяем, существует ли коллекция по заданному ключу.
+            if (!_data.TryGetValue(collectionKey, out object? collectionObj))
+            {
+                Console.WriteLine($"Ключ '{collectionKey}' не найден.");
+                return;
+            }
+            if (!(collectionObj is List<object> collection))
+            {
+                Console.WriteLine($"Значение по ключу '{collectionKey}' не является коллекцией.");
+                return;
+            }
+
+            // Локальный метод для сравнения значений поля.
+            int CompareField(object? a, object? b)
+            {
+                if (a == null && b == null) { return 0; }
+                if (a == null) { return -1; }
+                if (b == null) { return 1; }
+                // Попробуем числовое сравнение, если возможно.
+                if (double.TryParse(a.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out double da) &&
+                    double.TryParse(b.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out double db))
+                {
+                    return da.CompareTo(db);
+                }
+                // Иначе сравниваем как строки.
+                return StringComparer.InvariantCulture.Compare(a.ToString(), b.ToString());
+            }
+
+            // Локальный метод для сравнения двух элементов коллекции.
+            int CompareItems(object o1, object o2)
+            {
+                // Если оба элемента являются словарями (JSON-объектами)
+                if (o1 is Dictionary<string, object> d1 && o2 is Dictionary<string, object> d2)
+                {
+                    // Извлекаем значение для sortField (если поле отсутствует, считаем его null).
+                    d1.TryGetValue(sortField, out object? v1);
+                    d2.TryGetValue(sortField, out object? v2);
+                    int cmp = CompareField(v1, v2);
+                    return ascending ? cmp : -cmp;
+                }
+                // Если элементы не словари, оставляем порядок без изменений.
+                return 0;
+            }
+
+            // Сортируем коллекцию с помощью лямбда-выражения.
+            collection.Sort((o1, o2) => CompareItems(o1, o2));
+
+            // Перезаписываем коллекцию в исходном объекте.
+            _data[collectionKey] = collection;
+        }
+
+
+
+        #region Сериализация JSON
 
         /// <summary>
         /// Рекурсивно сериализует значение в JSON‑строку без форматирования.
@@ -229,5 +378,6 @@ namespace ClassLibrary1
                      .Replace("\r", "\\r")
                      .Replace("\t", "\\t") ?? string.Empty;
         }
+        #endregion
     }
 }
