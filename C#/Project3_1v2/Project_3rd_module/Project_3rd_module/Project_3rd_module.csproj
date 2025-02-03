@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="bin\Debug\net8.0\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="bin\Debug\net8.0\data\ru\workstations_beds.json" />
+      <None Include="bin\Debug\net8.0\data\ru\workstations_gathering.json" />
+      <None Include="bin\Debug\net8.0\data\ru\workstations_legacy.json" />
+      <None Include="bin\Debug\net8.0\data\ru\workstations_library_world.json" />
+      <None Include="bin\Debug\net8.0\data\ru\workstations_unusual.json" />
+      <None Include="bin\Debug\net8.0\data\ru\workstations_upgraded.json" />
+      <None Include="bin\Debug\net8.0\data\ru\workstations_village.json" />
+      <None Include="bin\Debug\net8.0\data\zh-hans\workstations_beds.json" />
+      <None Include="bin\Debug\net8.0\data\zh-hans\workstations_gathering.json" />
+      <None Include="bin\Debug\net8.0\data\zh-hans\workstations_legacy.json" />
+      <None Include="bin\Debug\net8.0\data\zh-hans\workstations_library_world.json" />
+      <None Include="bin\Debug\net8.0\data\zh-hans\workstations_unusual.json" />
+      <None Include="bin\Debug\net8.0\data\zh-hans\workstations_upgraded.json" />
+      <None Include="bin\Debug\net8.0\data\zh-hans\workstations_village.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ClassLibrary1\ClassLibrary1.csproj" />
+    </ItemGroup>
+
+</Project>
